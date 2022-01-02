@@ -1,15 +1,19 @@
 
 const { Sequelize, DataTypes } = require('sequelize');
-const { environment } = require('./environment/environment')
-const sequelize = new Sequelize({
+let environment 
+if(process.env.NODE_ENV){
+    environment = require('./environment/environment.prod').environment
+}else{
+    environment = require('./environment/environment.dev').environment
+}
+
+const sequelize = new Sequelize(environment.database_name, environment.user, environment.password ,{
     host: environment.host,
-    username: environment.user,
-    password: environment.password,
     port: environment.port,
-    database: environment.database_name,
     dialect: 'mysql',
     logging: !environment.production
 })
+
 const moment = require('moment')
 const Employee = sequelize.define('Employee',{
     id_employee: {

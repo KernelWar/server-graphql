@@ -12,7 +12,7 @@ app.use(cors())
 app.use(express.json());
 app.use(morgan('dev'));
 
-app.use('/graphql',jwt.authJWT, graphqlHTTP({
+app.use('/graphql', jwt.authJWT, graphqlHTTP({
     schema: graphql.schema,
     rootValue: graphql.rootAuth,
     graphiql: true,
@@ -25,7 +25,5 @@ app.get('*', function (req, res) {
     res.sendFile(path.join(__dirname, 'dist/angular-graphql', 'index.html'))
 });
 */
-app.get('/', (req, res) => {
-    res.send('Hello World! - App Graphql')
-  })
-app.listen(process.env.PORT || 8080, () => console.log('Server started'));
+
+app.listen(4000, () => console.log('Server started'));
