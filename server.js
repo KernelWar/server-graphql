@@ -19,10 +19,13 @@ app.use('/graphql',jwt.authJWT, graphqlHTTP({
 }));
 
 app.use(require('./login'))
-
+/*
 app.use(express.static(__dirname + '/dist/angular-graphql'));
 app.get('*', function (req, res) {
     res.sendFile(path.join(__dirname, 'dist/angular-graphql', 'index.html'))
 });
-
-app.listen(3000, () => console.log('Server started'));
+*/
+app.get('/', (req, res) => {
+    res.send('Hello World! - App Graphql')
+  })
+app.listen(8080, () => console.log('Server started'));
