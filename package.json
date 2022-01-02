@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "dev": "copy \"environment\\environment.dev.js\" \"environment\\environment.js\" && node server.js",
-    "start": "copy \"environment\\environment.prod.js\" \"environment\\environment.js\" && node server.js"
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC",
