@@ -1,9 +1,14 @@
 
 const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = new Sequelize('db_graphql', 'root', '',{
-    host: 'localhost',
+const { environment } = require('./environment/environment')
+const sequelize = new Sequelize({
+    host: environment.host,
+    username: environment.user,
+    password: environment.password,
+    port: environment.port,
+    database: environment.database_name,
     dialect: 'mysql',
-    logging: false
+    logging: !environment.production
 })
 const moment = require('moment')
 const Employee = sequelize.define('Employee',{
