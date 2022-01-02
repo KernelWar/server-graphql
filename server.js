@@ -25,4 +25,4 @@ app.get('*', function (req, res) {
     res.sendFile(path.join(__dirname, 'dist/angular-graphql', 'index.html'))
 });
 
-app.listen(8080, () => console.log('Server started'));
+app.listen(3000, () => console.log('Server started'));
