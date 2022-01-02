@@ -28,4 +28,4 @@ app.get('*', function (req, res) {
 app.get('/', (req, res) => {
     res.send('Hello World! - App Graphql')
   })
-app.listen(8080, () => console.log('Server started'));
+app.listen(process.env.PORT || 8080, () => console.log('Server started'));
