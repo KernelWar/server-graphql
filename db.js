@@ -1,6 +1,5 @@
 
-const { get } = require('express/lib/response');
-const { Sequelize, DataTypes, Model } = require('sequelize');
+const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = new Sequelize('db_graphql', 'root', '',{
     host: 'localhost',
     dialect: 'mysql'
@@ -55,6 +54,10 @@ const User = sequelize.define('User', {
     username: {
         type: DataTypes.STRING,
         unique: true,
+        allowNull: false
+    },
+    full_name:{
+        type: DataTypes.STRING,
         allowNull: false
     },
     password: {
