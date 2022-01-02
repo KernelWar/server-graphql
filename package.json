@@ -4,8 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "copy \"environment\\environment.dev.js\" \"environment\\environment.js\" && node server",
-    "deploy": "copy \"environment\\environment.prod.js\" \"environment\\environment.js\" && node server"
+    "start": "copy \"environment\\environment.dev.js\" \"environment\\environment.js\" && node server.js",
+    "deploy": "copy \"environment\\environment.prod.js\" \"environment\\environment.js\" && node server.js"
   },
   "author": "",
   "license": "ISC",
