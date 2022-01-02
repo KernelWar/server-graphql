@@ -22,13 +22,20 @@ routes.post("/login", function (request, response) {
                 message.message = "User valid"
                 message.user = user
             }
-            response.send(message).status(200)
+            response.status(200).send(message)
             return
         }
-        response.send(message).status(200)
+        response.status(200).send(message)
         return
     })
     response.status(401)
+})
+
+routes.post("/verifyToken", jwt.authJWT, function (request, response){
+    let message = {
+        message: 'Token valid'
+    }
+    response.status(200).send(message);
 })
 
 module.exports = routes

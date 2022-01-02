@@ -2,7 +2,8 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = new Sequelize('db_graphql', 'root', '',{
     host: 'localhost',
-    dialect: 'mysql'
+    dialect: 'mysql',
+    logging: false
 })
 const moment = require('moment')
 const Employee = sequelize.define('Employee',{
@@ -40,7 +41,7 @@ const Employee = sequelize.define('Employee',{
         type: DataTypes.DATE,
         allowNull: false,
         get(){
-            return moment(this.getDataValue('birthday')).add(1, 'day').format('DD/MMMM/YYYY')
+            return moment(this.getDataValue('birthday')).add(1, 'day').format('DD MMMM YYYY')
         }
     }
 })

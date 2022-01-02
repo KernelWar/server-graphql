@@ -1,6 +1,6 @@
 var { buildSchema } = require('graphql');
 const models = require('./db')
-const { Op, fn, where, col } = require('sequelize')
+const { Op, fn, where, col, or } = require('sequelize')
 models.syncdb()
 
 var schema = buildSchema(`
@@ -15,6 +15,11 @@ var schema = buildSchema(`
         birthday: String 
     }
 
+    type TableInfo{
+        length: Int
+    }
+    
+
     input EmployeeInput{
         name: String
         last_name: String
@@ -25,6 +30,7 @@ var schema = buildSchema(`
     type Query {
         getEmployees(limit: Int!, page: Int!): [Employee]
         getEmployeeByKeyword(limit: Int!, page: Int!, search: String!): [Employee]
+        getCountEmployeeByKeyword(search: String!): [TableInfo]
     }
 
     type Mutation{
@@ -35,11 +41,32 @@ var schema = buildSchema(`
 `);
 
 var rootAuth = {
-    getEmployees: (args) => models.Employee.findAll({ offset: (args.page == 0 ? 0 : args.page - 1) * args.limit, limit: args.limit }),
+    getCountEmployeeByKeyword: (args) => {
+        return models.Employee.count({
+            where:
+                or(
+                    { id_employee: { [Op.like]: `%${args.search}%` }, },
+                    { name: { [Op.like]: `%${args.search}%` }, },
+                    { last_name: { [Op.like]: `%${args.search}%` }, },
+                    { email: { [Op.like]: `%${args.search}%` }, },
+                    { nationality: { [Op.like]: `%${args.search}%` }, },
+                    { phone: { [Op.like]: `%${args.search}%` }, },
+                    { civil_status: { [Op.like]: `%${args.search}%` }, },
+                    where(
+                        fn('DATE_FORMAT', col('birthday'), '%d %M'),
+                        { [Op.like]: `%${args.search}%` }
+                    )
+                )
+        }).then(res=> {
+            return [{ length: res }]
+        })
+    }
+    ,
+    getEmployees: (args) => models.Employee.findAll({ offset: (args.page == 0 ? 0 : args.page - 1) * args.limit, limit: args.limit, order: [ ['name', 'ASC'] ]}),
     getEmployeeByKeyword: (args) => models.Employee.findAll({
         offset: (args.page == 0 ? 0 : args.page - 1) * args.limit,
         limit: args.limit,
-        where: require('sequelize').or(
+        where: or(
             { id_employee: { [Op.like]: `%${args.search}%` }, },
             { name: { [Op.like]: `%${args.search}%` }, },
             { last_name: { [Op.like]: `%${args.search}%` }, },
@@ -48,12 +75,15 @@ var rootAuth = {
             { phone: { [Op.like]: `%${args.search}%` }, },
             { civil_status: { [Op.like]: `%${args.search}%` }, },
             where(
-                fn('DATE_FORMAT', col('birthday'), '%d/%M/%Y'),
+                fn('DATE_FORMAT', col('birthday'), '%d %M'),
                 { [Op.like]: `%${args.search}%` }
             )
-        )
+        ),
+        order: [
+            ['name', 'ASC']
+        ]
     }),
-    updateEmployee: (args) =>
+    updateEmployee: (args) =>    
         models.Employee.update(args.input, { where: { id_employee: args.id_employee } }).then(() => {
             return models.Employee.findOne({
                 where: {
@@ -65,5 +95,5 @@ var rootAuth = {
 
 module.exports = {
     rootAuth,
-    schema    
+    schema
 }
