@@ -26,4 +26,8 @@ app.get('*', function (req, res) {
 });
 */
 
-app.listen(4000, () => console.log('Server started'));
+app.get("/", function(req, res){
+    res.send("Hello world -> App graphql").status(200)
+})
+
+app.listen(process.env.PORT || 80, () => console.log('Server started'));
