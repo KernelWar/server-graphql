@@ -50,7 +50,9 @@ const Employee = sequelize.define('Employee',{
         type: DataTypes.DATE,
         allowNull: false,
         get(){
-            return moment(this.getDataValue('birthday')).add(1, 'day').format('DD MMMM YYYY')
+            if(process.env.NODE_ENV == undefined){
+                return moment(this.getDataValue('birthday')).add(1, 'day').format('DD MMMM YYYY')
+            }            
         }
     }
 })
