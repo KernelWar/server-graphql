@@ -20,9 +20,9 @@ app.use('/graphql', jwt.authJWT, graphqlHTTP({
 
 app.use(require('./login'))
 
-app.use(express.static(__dirname + '/dist/server-graphql'));
+app.use(express.static(__dirname + '/dist'));
 app.get('*', function (req, res) {
-    res.sendFile(path.join(__dirname, '/dist/server-graphql', 'index.html'))
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'))
 });
 
 app.listen(process.env.PORT || 80, () => console.log('Server started'));
