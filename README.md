@@ -1,5 +1,6 @@
 # GraphQL API
-Este proyecto es una GraphQL API que tambíen implementa Sequelize para comunicarse con MySQL, además de JWT para la gestión de sesiones, la interfaz es un empaquetado de Angular, consulta el repositorio [aquí](https://github.com/KernelWar/angular-graphql "aquí")  o mira el [demo](https://graphqldbtest.herokuapp.com "demo") con `usernma: admin, password: qwerty123` o tambien mira el proyecto de [angular](https://angular-graphql.vercel.app "angular").
+Este proyecto es una GraphQL API que tambíen implementa Sequelize para comunicarse con MySQL, además de JWT para la gestión de sesiones, la interfaz es un empaquetado de Angular, consulta el repositorio [aquí](https://github.com/KernelWar/angular-graphql "aquí")  o mira el [demo](https://graphqldbtest.herokuapp.com "demo") con `username: admin, password: qwerty123` o tambien mira el proyecto de [angular](https://angular-graphql.vercel.app "angular").
+
 
 ### Configuración
 En la ruta `/environments` contiene las variables de entorno, en el archivo `environment.dev.ts` configure `host`, `port`, `user`, `password` y `database_name` por default se mira así:
